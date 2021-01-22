@@ -7,4 +7,8 @@ jobs:
     steps:
       - run: echo "Hello, World!"
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/action-a
+      - id: "action_a"
+        uses: ./.github/actions/action-a
+        with:
+          name: "bouzuya"
+      - run: echo ${{ steps.action_a.outputs.message }}

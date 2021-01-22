@@ -1,4 +1,11 @@
 name: "Hello World"
+inputs:
+  name:
+    description: "name"
+    required: true
+outputs:
+  message:
+    description: "message"
 runs:
   using: "node12"
   main: "index.js"
