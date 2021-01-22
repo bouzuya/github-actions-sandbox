@@ -1,3 +1,4 @@
+const core = require('@actions/core');
 const message = `Hello, ${process.env.INPUT_NAME}!`;
 console.log(message);
-console.log(`::set-output name=message::${message}`);
+core.setOutput('message', message);
