@@ -14,13 +14,14 @@ jobs:
       - id: get_issue_key
         uses: atlassian/gajira-find-issue-key@v2.0.2
         with:
-          from: branch
-      - uses: actions/github-script@v3
+          string: ${{ github.head_ref }}
+      - if: ${{ steps.get_issue_key.outputs.issue != '' }}
+        uses: actions/github-script@v3
         with:
           script: |
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '${{ steps.get_issue_key.outputs.issue }}'
+              body: '${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.get_issue_key.outputs.issue }}'
             })
