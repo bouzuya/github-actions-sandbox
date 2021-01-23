@@ -22,5 +22,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '${{ steps.get_issue_key.outputs.issue }}
+              body: '${{ steps.get_issue_key.outputs.issue }}'
             })
