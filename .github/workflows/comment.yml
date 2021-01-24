@@ -26,9 +26,9 @@ jobs:
           jira-base-url: ${{ secrets.JIRA_BASE_URL }}
           jira-user-email: ${{ secrets.JIRA_USER_EMAIL }}
           jira-api-token: ${{ secrets.JIRA_API_TOKEN }}
-          string: ${{ github.event.pull_request.title }}
+          string: ${{ github.event.issue.title }}
       - run: echo ${{ steps.find_jira_issue.outputs.key }} ${{ steps.find_jira_issue.outputs.summary }}
-      - if: ${{ step.find_jira_issue.outputs.key != '' }}
+      - if: ${{ steps.find_jira_issue.outputs.key != '' }}
         uses: actions/github-script@v3
         with:
           script: |
