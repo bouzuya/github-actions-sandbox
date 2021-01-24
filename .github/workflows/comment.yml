@@ -1,9 +1,10 @@
 name: comment
 on:
   issues:
-    types: [opened]
+    types: [edited, opened]
 jobs:
-  comment:
+  issue-opened:
+    if: github.event.action == 'opened'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v3
@@ -14,4 +15,26 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: 'issue opened'
+            })
+  issue-edited:
+    if: github.event.action == 'edited'
+    runs-on: ubuntu-latest
+    steps:
+      - id: find_jira_issue
+        uses: bouzuya/github-action-find-jira-issue@a6076528d121c24f52922c684ff062bc6d8af31f
+        with:
+          jira-base-url: ${{ secrets.JIRA_BASE_URL }}
+          jira-user-email: ${{ secrets.JIRA_USER_EMAIL }}
+          jira-api-token: ${{ secrets.JIRA_API_TOKEN }}
+          string: ${{ github.event.pull_request.title }}
+      - run: echo ${{ steps.find_jira_issue.outputs.key }} ${{ steps.find_jira_issue.outputs.summary }}
+      - if: ${{ step.find_jira_issue.outputs.key != '' }}
+        uses: actions/github-script@v3
+        with:
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '${{ steps.find_jira_issue.outputs.key }} ${{ steps.find_jira_issue.outputs.summary }}'
             })
