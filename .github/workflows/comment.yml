@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: find_jira_issue
-        uses: bouzuya/github-action-find-jira-issue@a6076528d121c24f52922c684ff062bc6d8af31f
+        uses: bouzuya/github-action-find-jira-issue@18c7481f1de473f783d588e994506239d00020b6
         with:
           jira-base-url: ${{ secrets.JIRA_BASE_URL }}
           jira-user-email: ${{ secrets.JIRA_USER_EMAIL }}
