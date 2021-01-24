@@ -36,5 +36,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '${{ steps.find_jira_issue.outputs.key }} ${{ steps.find_jira_issue.outputs.summary }}'
+              body: '${{ steps.find_jira_issue.outputs.key }} ${{ steps.find_jira_issue.outputs.summary }} ${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.find_jira_issue.outputs.key }}'
             })
